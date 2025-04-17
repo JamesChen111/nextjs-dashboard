@@ -67,3 +67,23 @@ root layout就想vue中的app.js文件，所有的路由文件可共享。
 在nextjs中，有两个方式执行流式传输：
 1- 在页面层，创建一个loading.tsx文件，它能为你创建一个`<Suspense>`
 2- 在组件层，使用`<Suspense>`进行颗粒度地控制
+
+## Server Actions
+To mutate data using Serve Actions.
+
+## Handling Errors
+错误边界组件用来处理未被捕捉的异常情况。
+在一个路由片段中创建error.tsx文件，当执行Server Actions时错误被捕捉，error.tsx就会被调用。
+```javascript
+export default function Error({
+  error,
+  reset
+}: {
+  error: Error & {digest?: string}; //Error是原生Error对象的实例
+  reset: () => void; //当被执行时，路由片段会被重新渲染
+}) {//UI}
+```
+
+404的异常情况。
+当路由片段中没有not-found.tsx文件时，错误被捕捉时error.tsx文件讲被调用，由于not-found.tsx的优先级大于error.tsx文件，所以not-found.tsx文件会被调用。
+注意，要在要访问的路由中调用notFound()函数。

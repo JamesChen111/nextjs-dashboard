@@ -1,3 +1,5 @@
+'use client'
+
 import { CustomerField } from '@/app/lib/definitions';
 import Link from 'next/link';
 import {
@@ -7,10 +9,16 @@ import {
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
+import { createInvoice, State } from '@/app/lib/actions';
+import { useActionState } from 'react';
 
 export default function Form({ customers }: { customers: CustomerField[] }) {
+  //useActionState接收两个参数，一个是action，另一个是initialState;
+  //返回两个值，form state,form提交时被调用的function.
+  const initialState: State = { message: null, error: {}};
+  const [state, formAction] = useActionState(createInvoice, initialState);
   return (
-    <form>
+    <form action={createInvoice}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
